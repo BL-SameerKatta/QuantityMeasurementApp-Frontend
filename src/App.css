@@ -1,45 +1,26 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  padding: 20px;
-}
-
 .app {
   max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: white;
-  font-size: 2.5rem;
   margin-bottom: 5px;
 }
 
 .subtitle {
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   margin-bottom: 30px;
 }
 
 .card {
-  background: white;
-  border-radius: 15px;
   padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
 
 .card h2 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
   font-size: 1.3rem;
 }
@@ -53,24 +34,32 @@ h1 {
 input {
   flex: 1;
   padding: 12px;
-  border: 2px solid #e0e0e0;
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   font-size: 16px;
+  background: rgba(0,0,0,0.2);
+  color: var(--text-primary);
   transition: border 0.3s;
 }
 
 input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary-color);
 }
 
 select {
   padding: 12px;
-  border: 2px solid #e0e0e0;
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   font-size: 16px;
-  background: white;
+  background: rgba(0,0,0,0.4);
+  color: var(--text-primary);
   cursor: pointer;
+}
+
+select option {
+  background: #312e81; 
+  color: white;
 }
 
 .button-row {
@@ -101,60 +90,23 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.btn-add {
-  background: #2ecc71;
-}
-
-.btn-compare {
-  background: #3498db;
-}
-
-.btn-subtract {
-  background: #e67e22;
-}
-
-.btn-divide {
-  background: #9b59b6;
-}
-
-.error {
-  background: #fdecea;
-  border-left: 4px solid #e74c3c;
-  padding: 15px;
-  border-radius: 8px;
-  color: #c0392b;
-  margin-bottom: 20px;
-}
+.btn-add { background: #10b981; }
+.btn-compare { background: #3b82f6; }
+.btn-subtract { background: #f59e0b; }
+.btn-divide { background: #8b5cf6; }
 
 .result-card {
-  background: white;
-  border-radius: 15px;
   padding: 25px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
 .result-card h2 {
-  color: #333;
+  color: var(--text-secondary);
   margin-bottom: 15px;
 }
 
-.result-card p {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2ecc71;
-}
-
 @media (max-width: 600px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  .input-row {
-    flex-direction: column;
-  }
-
-  .button-row {
-    flex-direction: column;
-  }
+  h1 { font-size: 1.8rem; }
+  .input-row { flex-direction: column; }
+  .button-row { flex-direction: column; }
 }

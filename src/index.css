@@ -1,13 +1,196 @@
+:root {
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #ec4899;
+  --bg-gradient: #28294a;
+  --surface-color: #35365e;
+  --surface-border: #4a4b73;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Glassmorphism Panel Utilities */
+.glass-panel {
+  background: var(--surface-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Shared App Styles */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.auth-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.MuiTextField-root {
+  margin-bottom: 1.5rem !important;
+}
+
+.MuiInputLabel-root {
+  color: var(--text-secondary) !important;
+}
+
+.MuiOutlinedInput-root {
+  color: var(--text-primary) !important;
+  background: #252648 !important;
+  border-radius: 6px !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--surface-border) !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color) !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color) !important;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #a855f7, #ec4899) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0.75rem !important;
+  border-radius: 6px !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  margin-top: 1rem !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
+}
+
+.auth-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 1.5rem;
+  transition: color 0.2s;
+}
+
+.auth-link span {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.auth-link:hover span {
+  color: #f472b6;
+}
+
+/* Dashboard specific styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-greeting {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.user-greeting span {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.logout-btn {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
 }
