@@ -30,7 +30,7 @@ const CATEGORIES = {
 };
 
 export default function App() {
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [token, setToken] = useState(localStorage.getItem('accessToken') || '');
   const [isRegistering, setIsRegistering] = useState(false);
   const [authError, setAuthError] = useState('');
 
@@ -81,7 +81,7 @@ export default function App() {
     ];
 
     try {
-      const response = await fetch(`${API_BASE}/quantity/${op}`, {
+      let response = await fetch(`${API_BASE}/quantity/${op}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,6 +89,41 @@ export default function App() {
         },
         body: JSON.stringify(payload)
       });
+
+      // Handle token expiration
+      if (response.status === 401) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          const refreshRes = await fetch(`${API_BASE}/auth/refresh`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken })
+          });
+
+          if (refreshRes.ok) {
+            const data = await refreshRes.json();
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+            setToken(data.accessToken);
+
+            // Retry original request
+            response = await fetch(`${API_BASE}/quantity/${op}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.accessToken}`
+              },
+              body: JSON.stringify(payload)
+            });
+          } else {
+            handleLogout();
+            throw new Error("Session expired. Please log in again.");
+          }
+        } else {
+          handleLogout();
+          throw new Error("Session expired. Please log in again.");
+        }
+      }
 
       if (!response.ok) throw new Error(await response.text());
       const data = await response.json();
@@ -117,7 +152,8 @@ export default function App() {
   }, [calculate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     setToken('');
   };
@@ -139,8 +175,9 @@ export default function App() {
           setIsRegistering(false);
           setAuthError('✓ Registration successful — please log in.');
         } else {
-          localStorage.setItem('token', data.token);
-          setToken(data.token);
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
+          setToken(data.accessToken);
         }
       } else {
         setAuthError(data.message || 'Authentication failed');
@@ -359,13 +396,13 @@ export default function App() {
               <div>
                 <div className="res-lbl">Output · {activeAction === 'Comparison' ? 'Compare' : arithmeticOp}</div>
                 {loading && <div className="res-val loading">Computing…</div>}
-              {!loading && errorMsg && <div className="res-val error">{errorMsg}</div>}
-              {!loading && !errorMsg && result && (
-                <div key={JSON.stringify(result)} className="res-val">{formatResult()}</div>
-              )}
-              {!loading && !errorMsg && !result && (
-                <div className="res-val muted">—</div>
-              )}
+                {!loading && errorMsg && <div className="res-val error">{errorMsg}</div>}
+                {!loading && !errorMsg && result && (
+                  <div key={JSON.stringify(result)} className="res-val">{formatResult()}</div>
+                )}
+                {!loading && !errorMsg && !result && (
+                  <div className="res-val muted">—</div>
+                )}
               </div>
 
               {resultUnit && (
